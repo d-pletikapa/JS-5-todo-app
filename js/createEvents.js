@@ -4,12 +4,13 @@ import {
   getStorage, modifyStorage,
   removeStorage,
   user,
+  getValueInStorage,
 } from './storage.js';
 import {
   renderNewTask,
   disableSubmitBtn,
   removeRow,
-  renderFinishRow, enableEditRow,
+  renderFinishRow, enableEditRow, renderUnFinishRow,
 } from './renderElements.js';
 import {table} from './createElements.js';
 
@@ -43,9 +44,22 @@ export const initEvents = () => {
         removeStorage(user.name, removeRow(thisRow)) : {};
     } else if (target === target.closest('.btn-success')) {
       const thisRow = target.closest('tr');
-      renderFinishRow(thisRow);
-      modifyStorage(user.name, thisRow.dataset.id,
-          'Выполнено', undefined);
+      if (getValueInStorage(
+          user.name,
+          thisRow.dataset.id,
+          'status') === 'В процессе') {
+        renderFinishRow(thisRow);
+        modifyStorage(user.name, thisRow.dataset.id,
+            'Выполнено', undefined);
+      } else {
+        const currentUrgencyStatus = getValueInStorage(
+            user.name,
+            thisRow.dataset.id,
+            'urgency');
+        renderUnFinishRow(thisRow, currentUrgencyStatus);
+        modifyStorage(user.name, thisRow.dataset.id,
+            'В процессе', undefined);
+      }
     } else if (target === target.closest('.btn-primary') ||
       target === target.closest('.btn-warning')) {
       const thisRow = target.closest('tr');

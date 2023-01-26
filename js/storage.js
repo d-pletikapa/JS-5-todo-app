@@ -32,6 +32,14 @@ export const createFormDataTask = (formData) => {
   addStorage(user.name, newTask);
 };
 
+export const getValueInStorage = (key, taskId, propertyToCheck) => {
+  let value;
+  getStorage(key).forEach((item) => {
+    item.id === taskId && (value = item[`${propertyToCheck}`]);
+  });
+  return value;
+};
+
 export const modifyStorage = (key, taskId, newStatus, newText) => {
   const data = getStorage(key);
   if (newStatus) {

@@ -24,7 +24,7 @@ export const disableSubmitBtn = () => {
 
 const updateRowOrder = () => {
   const allTr = document.querySelectorAll('tr');
-  [...allTr].forEach((item, index, array) =>
+  [...allTr].forEach((item, index) =>
     item.firstElementChild.textContent = `${index++}`);
   // for (let i = 0; i < allTr.length; i++) {
   //   allTr[i].firstElementChild.textContent = `${i++}`  };
@@ -41,6 +41,15 @@ export const renderFinishRow = (finishRow) => {
   finishRow.children[1].classList.replace(
       'task', 'text-decoration-line-through');
   finishRow.children[2].innerText = 'Выполнено';
+  finishRow.children[3].children[1].innerText = 'Возобновить';
+};
+
+export const renderUnFinishRow = (unFinishRow, status) => {
+  unFinishRow.className = `${status}`;
+  unFinishRow.children[1].classList.replace(
+      'text-decoration-line-through', 'task');
+  unFinishRow.children[2].innerText = 'В процессе';
+  unFinishRow.children[3].children[1].innerText = 'Завершить';
 };
 
 export const enableEditRow = (editRow) => {

@@ -120,7 +120,7 @@ export const createStorageRow = (obj, objIndex) => {
                 Удалить
               </button>
               <button class="btn btn-success">
-                Завершить
+                ${obj.status === 'В процессе' ? 'Завершить' : 'Возобновить'}
               </button>
               <button class="btn btn-primary">
                 Редактировать
